@@ -1,0 +1,33 @@
+[
+    {
+        "model": "todo_app.task",
+        "pk": 1,
+        "fields":{
+            "title": "Create Test",
+            "completed": true
+        }
+    },
+    {
+        "model": "todo_app.task",
+        "pk": 2,
+        "fields":{
+            "title": "Create some more tests",
+            "completed": true
+        }
+    },
+    {
+        "model": "todo_app.task",
+        "pk": 3,
+        "fields":{
+            "title": "Grab curry powder"
+        }
+    },
+    {
+        "model": "todo_app.task",
+        "pk": 4,
+        "fields":{
+            "title": "Read Practical OOD for class"
+        }
+    }
+
+]
