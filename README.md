@@ -1,3 +1,4 @@
+
 # Todo App
 
 This application will allow user to `create` new events, `read` pending or incomplete events, `update` existing events, and `delete` events.
@@ -70,6 +71,7 @@ To run this project, be sure to add your secret key in .env
 To run the tests after cloning the repo and creating your .env file with your secret key included, cd into backend and run the following:
 
 `python manage.py test todo_app/tests`
+
 
 
 
