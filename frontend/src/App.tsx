@@ -42,7 +42,7 @@ function App(){
 
   return(
     <div className='App'>
-      <Header/> 
+      {/* <Header/>  */}
     <Row style={{textAlign:'center'}}>
       <h3>Pending Tasks</h3>
         {pendingTasks.map((task) => 
