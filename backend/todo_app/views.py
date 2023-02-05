@@ -9,12 +9,10 @@ from .models import *
 def home(request):
     file = open('static/index.html').read()
     return HttpResponse(file)
-    # return HttpResponse("<h1>HOMEPAGE</h1>")
 
 api_view(['GET'])
 def all_tasks(request):
     tasks = list(Task.objects.all().values())
-    # print(tasks)
     completedTasks = filter(lambda x: x['completed'] == True, tasks)
     pendingTasks = filter(lambda x:x['completed'] == False, tasks)
     completedTasks = list(completedTasks)

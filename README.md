@@ -10,7 +10,7 @@ Clone the project
 
 Checkout the current branch
 
-```git checkout django_setup```
+```git checkout TODO-001```
 
 Create and run a virtual environment
 
@@ -30,17 +30,7 @@ Install Dependencies
 `pip install -r requirements.txt`
 
 Create .env file with `SECRET_KEY` from backend/settings.py
-
-```
-# Creates the .env file
-touch .env
-
-# Open window to edit file
-code .env
-
-# Put the following into .env
-SECRET_KEY = your django secret key
-```
+Or rename the .env.example file to .env and copy/paste your Django key from backend/backend/settings.py
 
 Create your postgreSQL database
 `createdb todo_db`

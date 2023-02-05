@@ -8,7 +8,7 @@ import App from "../App"
 
 vi.mock('axios')
 
-describe("Get the data from the database", () => {
+describe("Get the tasks from the database", () => {
     it('creates a mock axios request to test functionality', async () => {
         const mockAxios = axios as Mocked<typeof axios>
         mockAxios.get.mockResolvedValue({data:{completed:[], pending:[]}})
@@ -16,6 +16,7 @@ describe("Get the data from the database", () => {
         expect(tasks).toStrictEqual({completed:[], pending:[]})
     })
 })
+
 
 describe("Make sure nothing changes in my css or html", () => {
     it("will take a snapshot of the header", () => {
