@@ -8,6 +8,7 @@ import { InputGroup } from "react-bootstrap";
 import Header from "./components/Header";
 import axios from "axios";
 import { Tasks } from "./components/Tasks";
+import { CSRFToken } from "./components/CSRFToken";
 
 export interface myTasks {
   id: number;
@@ -39,9 +40,11 @@ function App() {
     getResponseFromGetTasks();
   }, []);
 
+  CSRFToken();
+
   return (
     <div className="App">
-      <Header />
+      <Header pendingTasks={pendingTasks} setPendingTasks={setPendingTasks} />
       <Row style={{ textAlign: "center" }}>
         <h3>Pending Tasks</h3>
         {pendingTasks.map((task) => (

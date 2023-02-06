@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`Make sure nothing changes in my css or html > will take a snapshot of the header 1`] = `
+exports[`App > Make sure nothing changes in my css or html > will take a snapshot of the header 1`] = `
 <div
   className="App"
 >

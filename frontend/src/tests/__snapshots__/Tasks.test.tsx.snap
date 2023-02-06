@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`take a snapshot of Tasks component > gives a snapshot of Tasks 1`] = `
+exports[`Tasks > snapshot of Tasks component > gives a snapshot of Tasks 1`] = `
 <div
   className="task"
 >
