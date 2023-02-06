@@ -1,16 +1,16 @@
 import React from "react";
-import { myTasks } from "../App";
+import { ITask } from "../App";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 interface IdProps {
-  task: myTasks;
+  task: ITask;
   selected: number[];
   setSelected: (selected: number[]) => void;
 }
 
-export const Tasks: React.FC<IdProps> = ({ task, selected, setSelected }) => {
+export const Task: React.FC<IdProps> = ({ task, selected, setSelected }) => {
   return (
     <div className="task">
       <Row>

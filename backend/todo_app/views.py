@@ -12,9 +12,8 @@ def home(request):
 
 api_view(['GET'])
 def all_tasks(request):
-    tasks = list(Task.objects.all().values())
-    completedTasks = filter(lambda x: x['completed'] == True, tasks)
-    pendingTasks = filter(lambda x:x['completed'] == False, tasks)
+    completedTasks = list(filter(lambda x: x['completed'] == True, Task.objects.all().values()))
+    pendingTasks = list(filter(lambda x:x['completed'] == False, Task.objects.all().values()))
     completedTasks = list(completedTasks)
     pendingTasks = list(pendingTasks)
     return JsonResponse({'completed': completedTasks, 'pending': pendingTasks})
