@@ -9,8 +9,8 @@ import axios from "axios";
 
 // set up to pass pending task and setpending tasks into Header
 interface HeaderProps {
-  pendingTasks: ITask[];
-  setPendingTasks: (pendingTasks: ITask[]) => void;
+  allTasks: ITask[];
+  setAllTasks: (allTasks: ITask[]) => void;
 }
 
 // export so we can run tests on createTaskResponse
@@ -19,35 +19,38 @@ export interface createTaskResponse {
   id: number;
 }
 
-export const createTask = async (str: string): Promise<createTaskResponse> => {
-  let response = await axios.post("new_task/", { name: str });
+export const createTask = async (
+  taskTitle: string
+): Promise<createTaskResponse> => {
+  let response = await axios.post("new_task/", {
+    name: taskTitle,
+  });
   return response["data"];
 };
 
-export const Header: React.FC<HeaderProps> = ({
-  pendingTasks,
-  setPendingTasks,
-}) => {
+export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
   const [newTask, setNewTask] = useState("");
-  const [created, setCreated] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     let input = newTask.replaceAll(" ", "");
     if (input.length > 1 && input != "") {
-      setCreated(false);
+      setIsDisabled(false);
     } else {
-      setCreated(true);
+      setIsDisabled(true);
     }
   }, [newTask]);
 
-  const createNewTask = async (event?: React.FormEvent<HTMLFormElement>) => {
+  const createNewTask = async (
+    str: string,
+    event?: React.FormEvent<HTMLFormElement>
+  ) => {
     event?.preventDefault();
-    console.log("hello");
-    let response = await createTask(newTask);
+    let response = await createTask(str);
     if (response.createdItem) {
-      setPendingTasks([
-        ...pendingTasks,
-        { id: response.id, title: newTask, completed: false },
+      setAllTasks([
+        ...allTasks,
+        { id: response.id, title: str, completed: false },
       ]);
       setNewTask("");
     }
@@ -80,7 +83,7 @@ export const Header: React.FC<HeaderProps> = ({
             <label className="form-check-label">C</label>
           </Col>
           <Col xs={4}>
-            <form onSubmit={(event) => createNewTask(event)}>
+            <form onSubmit={(event) => createNewTask(newTask, event)}>
               <input
                 type="text"
                 value={newTask}
@@ -92,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="btn btn-primary"
                 type="submit"
                 id="createTaskButton"
-                disabled={created}
+                disabled={isDisabled}
               >
                 +
               </button>

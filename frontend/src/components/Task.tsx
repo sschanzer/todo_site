@@ -6,15 +6,18 @@ import Col from "react-bootstrap/Col";
 
 interface IdProps {
   task: ITask;
-  selected: number[];
-  setSelected: (selected: number[]) => void;
 }
 
-export const Task: React.FC<IdProps> = ({ task, selected, setSelected }) => {
+export const Task: React.FC<IdProps> = ({ task }) => {
   return (
     <div className="task">
       <Row>
-        <Col xs={8} style={{ display: "flex" }}>
+        <Col
+          xs={8}
+          id={`task${task.id}`}
+          className="taskTitle"
+          style={{ display: "flex" }}
+        >
           <p>{task.title}</p>
         </Col>
         <Col xs={4} style={{ display: "flex" }}>

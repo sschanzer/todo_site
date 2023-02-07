@@ -12,20 +12,13 @@ def home(request):
 
 @api_view(['GET', 'POST'])
 def all_tasks(request):
-<<<<<<< HEAD
     if request.method == 'GET':
-        completedTasks = list(filter(lambda x: x['completed'] == True, Task.objects.all().values()))
-        pendingTasks = list(filter(lambda x:x['completed'] == False, Task.objects.all().values()))
-        return JsonResponse({'completed': completedTasks, 'pending': pendingTasks})
+        my_tasks = list(Task.objects.all().values())
+        return JsonResponse({'tasks': my_tasks})
     if request.method == 'POST':
-        new_task = Task.objects.create(title = request.data['name'])
-        new_task.save()
-        return JsonResponse({'createdItem':True, 'id':new_task.id})
-
-=======
-    completedTasks = list(filter(lambda x: x['completed'] == True, Task.objects.all().values()))
-    pendingTasks = list(filter(lambda x:x['completed'] == False, Task.objects.all().values()))
-    completedTasks = list(completedTasks)
-    pendingTasks = list(pendingTasks)
-    return JsonResponse({'completed': completedTasks, 'pending': pendingTasks})
->>>>>>> TODO-001
+        try:
+            new_task = Task.objects.create(title = request.data['name'])
+            new_task.save()
+            return JsonResponse({'createdItem':True, 'id':new_task.id})
+        except:
+            return JsonResponse({'createdItem': False, 'id':0})

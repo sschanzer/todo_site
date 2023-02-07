@@ -11,9 +11,9 @@ describe("App", () => {
   describe("getTasks()", () => {
     test("returns tasks from database", async () => {
       const mockAxios = axios as Mocked<typeof axios>;
-      mockAxios.get.mockResolvedValue({ data: { completed: [], pending: [] } });
+      mockAxios.get.mockResolvedValue({ data: { tasks: [] } });
       const tasks = await getTasks();
-      expect(tasks).toStrictEqual({ completed: [], pending: [] });
+      expect(tasks).toStrictEqual([]);
     });
   });
   it("will take a snapshot of the header", () => {
