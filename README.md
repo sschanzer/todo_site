@@ -58,8 +58,8 @@ To run this project, be sure to add your secret key in .env
 
 `SECRET_KEY = your django SECRET_KEY` from backend/settings.py
 
-### Runing the Tests
+### Running the Tests
 
-To run the tests after cloning the repo and creating your .env file with your secret key included, cd into backend and run the following:
+In the backend directory, run the following::
 
 `python manage.py test todo_app/tests`

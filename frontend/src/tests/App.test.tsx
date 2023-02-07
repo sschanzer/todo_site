@@ -16,10 +16,8 @@ describe("App", () => {
       expect(tasks).toStrictEqual({ completed: [], pending: [] });
     });
   });
-  describe("Make sure nothing changes in my css or html", () => {
-    it("will take a snapshot of the header", () => {
-      const testApp = TestRenderer.create(<App />);
-      expect(testApp).toMatchSnapshot();
-    });
+  it("will take a snapshot of the header", () => {
+    const testApp = TestRenderer.create(<App />);
+    expect(testApp).toMatchSnapshot();
   });
 });

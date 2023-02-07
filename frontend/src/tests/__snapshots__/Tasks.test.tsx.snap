@@ -1,6 +1,57 @@
 // Vitest Snapshot v1
 
+<<<<<<< HEAD
 exports[`Tasks > snapshot of Tasks component > gives a snapshot of Tasks 1`] = `
+=======
+exports[`Tasks > Take a snapshot of Tasks component > returns a snapshot of Tasks 1`] = `
+<div
+  className="task"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-8"
+      style={
+        {
+          "display": "flex",
+        }
+      }
+    >
+      <p>
+        Create Test
+      </p>
+    </div>
+    <div
+      className="col-4"
+      style={
+        {
+          "display": "flex",
+        }
+      }
+    >
+      <div
+        className="form-check"
+      >
+        <input
+          className="form-check-input"
+          disabled={false}
+          type="checkbox"
+        />
+        <label
+          className="form-check-label"
+          title=""
+        >
+          select
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`take a snapshot of Tasks component > gives a snapshot of Tasks 1`] = `
+>>>>>>> TODO-001
 <div
   className="task"
 >
