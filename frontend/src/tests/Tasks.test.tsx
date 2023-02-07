@@ -1,4 +1,4 @@
-import { Tasks } from "../components/Tasks";
+import { Tasks } from "../components/Task";
 import { describe, expect, test } from "vitest";
 import TestRenderer from "react-test-renderer";
 

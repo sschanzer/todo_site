@@ -7,18 +7,18 @@ import Col from "react-bootstrap/Col";
 import { InputGroup } from "react-bootstrap";
 import Header from "./components/Header";
 import axios from "axios";
-import { Tasks } from "./components/Tasks";
+import { Task } from "./components/Task";
 import { CSRFToken } from "./components/CSRFToken";
 
-export interface myTasks {
+export interface ITask {
   id: number;
   title: string;
   completed: boolean;
 }
 
 export interface responseTasks {
-  completed: myTasks[];
-  pending: myTasks[];
+  completed: ITask[];
+  pending: ITask[];
 }
 
 export async function getTasks(): Promise<responseTasks> {
@@ -28,8 +28,8 @@ export async function getTasks(): Promise<responseTasks> {
 
 function App() {
   const [selectedTask, setSelectedTask] = useState<number[]>([]);
-  const [completedTasks, setCompletedTasks] = useState<myTasks[]>([]);
-  const [pendingTasks, setPendingTasks] = useState<myTasks[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
+  const [pendingTasks, setPendingTasks] = useState<ITask[]>([]);
 
   useEffect(() => {
     const getResponseFromGetTasks = async () => {
@@ -48,7 +48,7 @@ function App() {
       <Row style={{ textAlign: "center" }}>
         <h3>Pending Tasks</h3>
         {pendingTasks.map((task) => (
-          <Tasks
+          <Task
             task={task}
             selected={selectedTask}
             setSelected={setSelectedTask}
@@ -59,7 +59,7 @@ function App() {
       <Row style={{ textAlign: "center" }}>
         <h3>Completed Tasks</h3>
         {completedTasks.map((task) => (
-          <Tasks
+          <Task
             task={task}
             selected={selectedTask}
             setSelected={setSelectedTask}

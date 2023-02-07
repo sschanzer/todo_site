@@ -13,11 +13,8 @@ def home(request):
 @api_view(['GET', 'POST'])
 def all_tasks(request):
     if request.method == 'GET':
-        tasks = list(Task.objects.all().values())
-        completedTasks = filter(lambda x: x['completed'] == True, tasks)
-        pendingTasks = filter(lambda x:x['completed'] == False, tasks)
-        completedTasks = list(completedTasks)
-        pendingTasks = list(pendingTasks)
+        completedTasks = list(filter(lambda x: x['completed'] == True, Task.objects.all().values()))
+        pendingTasks = list(filter(lambda x:x['completed'] == False, Task.objects.all().values()))
         return JsonResponse({'completed': completedTasks, 'pending': pendingTasks})
     if request.method == 'POST':
         new_task = Task.objects.create(title = request.data['name'])

@@ -3,14 +3,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { InputGroup } from "react-bootstrap";
-import { myTasks } from "../App";
+import { ITask } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 // set up to pass pending task and setpending tasks into Header
 interface HeaderProps {
-  pendingTasks: myTasks[];
-  setPendingTasks: (pendingTasks: myTasks[]) => void;
+  pendingTasks: ITask[];
+  setPendingTasks: (pendingTasks: ITask[]) => void;
 }
 
 // export so we can run tests on createTaskResponse
