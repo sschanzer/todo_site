@@ -1,4 +1,4 @@
-import { Tasks } from "../components/Task";
+import { Task } from "../components/Task";
 import { describe, expect, it, test } from "vitest";
 import TestRenderer from "react-test-renderer";
 
@@ -10,7 +10,7 @@ describe("Tasks", () => {
         selected = v;
       };
       const header = TestRenderer.create(
-        <Tasks
+        <Task
           setSelected={setSelected}
           selected={selected}
           task={{ id: 1, title: "Create Test", completed: true }}
