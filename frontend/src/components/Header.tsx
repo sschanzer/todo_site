@@ -28,29 +28,33 @@ export const createTask = async (
   return response["data"];
 };
 
+export const isTaskTitleEmpty = (taskTile: string) => {
+  let cleanInput = taskTile.replaceAll(" ", "");
+  if (cleanInput.length >= 1 && cleanInput != "") {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
   const [newTask, setNewTask] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isSubmittedDisabled, setIsSubmittedDisabled] = useState(true);
 
   useEffect(() => {
-    let input = newTask.replaceAll(" ", "");
-    if (input.length > 1 && input != "") {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
+    setIsSubmittedDisabled(isTaskTitleEmpty(newTask));
   }, [newTask]);
 
   const createNewTask = async (
-    str: string,
+    task: string,
     event?: React.FormEvent<HTMLFormElement>
   ) => {
     event?.preventDefault();
-    let response = await createTask(str);
+    let response = await createTask(task);
     if (response.createdItem) {
       setAllTasks([
         ...allTasks,
-        { id: response.id, title: str, completed: false },
+        { id: response.id, title: task, completed: false },
       ]);
       setNewTask("");
     }
@@ -95,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
                 className="btn btn-primary"
                 type="submit"
                 id="createTaskButton"
-                disabled={isDisabled}
+                disabled={isSubmittedDisabled}
               >
                 +
               </button>

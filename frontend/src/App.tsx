@@ -47,7 +47,7 @@ function App() {
       <Row style={{ textAlign: "center" }}>
         <h3>Completed Tasks</h3>
         {allTasks.map((task) =>
-          task.completed == false ? <Task task={task} /> : null
+          task.completed == true ? <Task task={task} /> : null
         )}
       </Row>
     </div>
