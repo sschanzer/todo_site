@@ -36,7 +36,7 @@ Or rename the .env.example file to .env and copy/paste your Django key from back
 Create your postgreSQL database
 `createdb todo_db`
 
-Make migragtions and migrate the models into the database
+Make migrations and migrate the models into the database
 
 ```
 # Makes migrations

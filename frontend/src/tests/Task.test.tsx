@@ -10,11 +10,7 @@ describe("Tasks", () => {
         selected = v;
       };
       const header = TestRenderer.create(
-        <Task
-          setSelected={setSelected}
-          selected={selected}
-          task={{ id: 1, title: "Create Test", completed: true }}
-        />
+        <Task task={{ id: 1, title: "Create Test", completed: true }} />
       );
       expect(header).toMatchSnapshot();
     });

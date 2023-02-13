@@ -8,7 +8,8 @@ exports[`Tasks > Take a snapshot of Tasks component > returns a snapshot of Task
     className="row"
   >
     <div
-      className="col-8"
+      className="taskTitle col-8"
+      id="task1"
       style={
         {
           "display": "flex",

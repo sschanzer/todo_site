@@ -8,6 +8,7 @@ import { InputGroup } from "react-bootstrap";
 import Header from "./components/Header";
 import axios from "axios";
 import { Task } from "./components/Task";
+import { CSRFToken } from "./components/CSRFToken";
 
 export interface ITask {
   id: number;
@@ -15,53 +16,39 @@ export interface ITask {
   completed: boolean;
 }
 
-export interface responseTasks {
-  completed: ITask[];
-  pending: ITask[];
-}
-
-export async function getTasks(): Promise<responseTasks> {
-  let response = await axios.get("all_tasks");
-  return response.data;
+export async function getTasks(): Promise<ITask[]> {
+  let response = await axios.get("all_tasks/");
+  return response.data.tasks;
 }
 
 function App() {
-  const [selectedTask, setSelectedTask] = useState<number[]>([]);
-  const [completedTasks, setCompletedTasks] = useState<ITask[]>([]);
-  const [pendingTasks, setPendingTasks] = useState<ITask[]>([]);
+  const [allTasks, setAllTasks] = useState<ITask[]>([]);
 
   useEffect(() => {
-    const getResponseFromGetTasks = async () => {
+    const getResponse = async () => {
       let response = await getTasks();
-      setCompletedTasks(response.completed);
-      setPendingTasks(response.pending);
+      setAllTasks(response);
     };
-    getResponseFromGetTasks();
+    getResponse();
   }, []);
+
+  CSRFToken();
 
   return (
     <div className="App">
-      <Header />
+      <Header allTasks={allTasks} setAllTasks={setAllTasks} />
       <Row style={{ textAlign: "center" }}>
         <h3>Pending Tasks</h3>
-        {pendingTasks.map((task) => (
-          <Task
-            task={task}
-            selected={selectedTask}
-            setSelected={setSelectedTask}
-          />
-        ))}
+        {allTasks.map((task) =>
+          task.completed == false ? <Task task={task} /> : null
+        )}
       </Row>
 
       <Row style={{ textAlign: "center" }}>
         <h3>Completed Tasks</h3>
-        {completedTasks.map((task) => (
-          <Task
-            task={task}
-            selected={selectedTask}
-            setSelected={setSelectedTask}
-          />
-        ))}
+        {allTasks.map((task) =>
+          task.completed == false ? <Task task={task} /> : null
+        )}
       </Row>
     </div>
   );

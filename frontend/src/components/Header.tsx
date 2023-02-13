@@ -3,8 +3,59 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { InputGroup } from "react-bootstrap";
+import { ITask } from "../App";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function Header() {
+// set up to pass pending task and setpending tasks into Header
+interface HeaderProps {
+  allTasks: ITask[];
+  setAllTasks: (allTasks: ITask[]) => void;
+}
+
+// export so we can run tests on createTaskResponse
+export interface createTaskResponse {
+  createdItem: boolean;
+  id: number;
+}
+
+export const createTask = async (
+  taskTitle: string
+): Promise<createTaskResponse> => {
+  let response = await axios.post("new_task/", {
+    name: taskTitle,
+  });
+  return response["data"];
+};
+
+export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
+  const [newTask, setNewTask] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    let input = newTask.replaceAll(" ", "");
+    if (input.length > 1 && input != "") {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [newTask]);
+
+  const createNewTask = async (
+    str: string,
+    event?: React.FormEvent<HTMLFormElement>
+  ) => {
+    event?.preventDefault();
+    let response = await createTask(str);
+    if (response.createdItem) {
+      setAllTasks([
+        ...allTasks,
+        { id: response.id, title: str, completed: false },
+      ]);
+      setNewTask("");
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -32,26 +83,28 @@ function Header() {
             <label className="form-check-label">C</label>
           </Col>
           <Col xs={4}>
-            <div className="input-group mb-3">
+            <form onSubmit={(event) => createNewTask(newTask, event)}>
               <input
                 type="text"
-                className="form-control"
+                value={newTask}
                 placeholder="Task"
-                id="inputDefault"
+                id="createTaskInput"
+                onChange={(event) => setNewTask(event.target.value)}
               />
               <button
                 className="btn btn-primary"
-                type="button"
-                id="button-addon2"
+                type="submit"
+                id="createTaskButton"
+                disabled={isDisabled}
               >
                 +
               </button>
-            </div>
+            </form>
           </Col>
         </Row>
       </Container>
     </div>
   );
-}
+};
 
 export default Header;
