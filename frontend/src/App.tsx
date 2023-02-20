@@ -4,7 +4,6 @@ import "./App.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { InputGroup } from "react-bootstrap";
 import Header from "./components/Header";
 import axios from "axios";
 import { Task } from "./components/Task";
@@ -23,6 +22,7 @@ export async function getTasks(): Promise<ITask[]> {
 
 function App() {
   const [allTasks, setAllTasks] = useState<ITask[]>([]);
+  const [selectedTasks, setSelectedTasks] = useState<number[]>([]);
 
   useEffect(() => {
     const getResponse = async () => {
@@ -34,13 +34,20 @@ function App() {
 
   return (
     <Container className="App">
-      <Header allTasks={allTasks} setAllTasks={setAllTasks} />
+      <Header
+        allTasks={allTasks}
+        setAllTasks={setAllTasks}
+        selectedTasks={selectedTasks}
+        setSelectedTasks={setSelectedTasks}
+      />
       <Row style={{ textAlign: "center" }}>
         <h3>Pending Tasks</h3>
         <TaskRenderer
           completed={false}
           allTasks={allTasks}
           setAllTasks={setAllTasks}
+          selectedTasks={selectedTasks}
+          setSelectedTasks={setSelectedTasks}
         />
       </Row>
 
@@ -50,6 +57,8 @@ function App() {
           completed={true}
           allTasks={allTasks}
           setAllTasks={setAllTasks}
+          selectedTasks={selectedTasks}
+          setSelectedTasks={setSelectedTasks}
         />
       </Row>
     </Container>

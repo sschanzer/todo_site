@@ -10,6 +10,8 @@ import axios from "axios";
 
 // set up to pass pending task and setpending tasks into Header
 interface HeaderProps {
+  selectedTasks: number[];
+  setSelectedTasks: (selectedTasks: number[]) => void;
   allTasks: ITask[];
   setAllTasks: (allTasks: ITask[]) => void;
 }
@@ -29,6 +31,11 @@ export const createTask = async (
   return response["data"];
 };
 
+export const changeSelectedTasks = async (selectedList: number[]) => {
+  let response = await axios.put("tasks/", { selected: selectedList });
+  return response.data.success;
+};
+
 export const isTaskTitleEmpty = (taskTile: string) => {
   let cleanInput = taskTile.replaceAll(" ", "");
   if (cleanInput.length >= 1 && cleanInput != "") {
@@ -38,9 +45,39 @@ export const isTaskTitleEmpty = (taskTile: string) => {
   }
 };
 
-export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
+export const Header: React.FC<HeaderProps> = ({
+  allTasks,
+  setAllTasks,
+  selectedTasks,
+  setSelectedTasks,
+}) => {
   const [newTask, setNewTask] = useState("");
   const [isSubmittedDisabled, setIsSubmittedDisabled] = useState(true);
+
+  const changingMultipleStatus = async () => {
+    let response = await changeSelectedTasks(selectedTasks);
+    if (response) {
+      allTasks.map((task) => {
+        selectedTasks.map((id) => {
+          if (task.id === id) {
+            console.log(task);
+            task.completed = !task.completed;
+          }
+        });
+      });
+      setAllTasks([...allTasks]);
+      setSelectedTasks([]);
+    }
+  };
+
+  const isChangeStatusDisabled = (): boolean => {
+    let myList = selectedTasks;
+    return myList.length < 1;
+  };
+
+  useEffect(() => {
+    isChangeStatusDisabled();
+  }, [selectedTasks]);
 
   useEffect(() => {
     setIsSubmittedDisabled(isTaskTitleEmpty(newTask));
@@ -65,7 +102,15 @@ export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
   return (
     <Container>
       <Row>
-        <Col xs={4}></Col>
+        <Col xs={4}>
+          <Button
+            onClick={changingMultipleStatus}
+            disabled={isChangeStatusDisabled()}
+            id="changeStatusBtn"
+          >
+            Update
+          </Button>
+        </Col>
         <Col xs={8}>
           <Form
             style={{ position: "relative" }}

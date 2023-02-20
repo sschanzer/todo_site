@@ -7,8 +7,10 @@ import axios from "axios";
 
 export interface TaskProps {
   task: ITask;
+  selectedTasks: number[];
+  setSelectedTasks: (selectedTasks: number[]) => void;
   allTasks: ITask[];
-  setAllTasks: (pendingTasks: ITask[]) => void;
+  setAllTasks: (allTasks: ITask[]) => void;
 }
 
 export const changeTaskStatus = async (id: number) => {
@@ -16,7 +18,13 @@ export const changeTaskStatus = async (id: number) => {
   return response.data.changed;
 };
 
-export const Task: React.FC<TaskProps> = ({ task, allTasks, setAllTasks }) => {
+export const Task: React.FC<TaskProps> = ({
+  task,
+  allTasks,
+  setAllTasks,
+  selectedTasks,
+  setSelectedTasks,
+}) => {
   const changeStatus = async (clicked: boolean, taskToChange: ITask) => {
     let response = await changeTaskStatus(taskToChange["id"]);
     if (response) {
@@ -28,19 +36,31 @@ export const Task: React.FC<TaskProps> = ({ task, allTasks, setAllTasks }) => {
 
   return (
     <Row className="task">
+      <Col>
+        <Form.Check
+          id={`taskSelectedBtn${task.id}`}
+          type="checkbox"
+          onChange={(event) =>
+            event.target.checked
+              ? setSelectedTasks([...selectedTasks, task.id])
+              : setSelectedTasks(selectedTasks.filter((id) => id !== task.id))
+          }
+        />
+      </Col>
       <Col xs={8} id={`task${task.id}`} className="taskTitle">
         {task.title}
       </Col>
-      <Col xs={4} className="checkHolder">
+      <Col className="checkHolder" xs={2}>
         <Form.Check
           id={`taskCheck${task.id}`}
           type="checkbox"
-          name="checkbox"
           className="check"
           checked={task.completed}
           onChange={(event) => changeStatus(event.target.checked, task)}
         />
-        <Form.Label for="checkbox">c</Form.Label>
+        <Form.Label for="checkbox">
+          {task.completed ? "done" : "pending"}
+        </Form.Label>
       </Col>
     </Row>
   );
