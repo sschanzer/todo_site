@@ -8,7 +8,7 @@ import { InputGroup } from "react-bootstrap";
 import Header from "./components/Header";
 import axios from "axios";
 import { Task } from "./components/Task";
-import { CSRFToken } from "./components/CSRFToken";
+import { TaskRenderer } from "./components/TaskRenderer";
 
 export interface ITask {
   id: number;
@@ -32,25 +32,27 @@ function App() {
     getResponse();
   }, []);
 
-  CSRFToken();
-
   return (
-    <div className="App">
+    <Container className="App">
       <Header allTasks={allTasks} setAllTasks={setAllTasks} />
       <Row style={{ textAlign: "center" }}>
         <h3>Pending Tasks</h3>
-        {allTasks.map((task) =>
-          task.completed == false ? <Task task={task} /> : null
-        )}
+        <TaskRenderer
+          completed={false}
+          allTasks={allTasks}
+          setAllTasks={setAllTasks}
+        />
       </Row>
 
       <Row style={{ textAlign: "center" }}>
         <h3>Completed Tasks</h3>
-        {allTasks.map((task) =>
-          task.completed == false ? <Task task={task} /> : null
-        )}
+        <TaskRenderer
+          completed={true}
+          allTasks={allTasks}
+          setAllTasks={setAllTasks}
+        />
       </Row>
-    </div>
+    </Container>
   );
 }
 
