@@ -43,9 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'todo_app',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -116,6 +119,22 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+CORS_ALLOWED_ORIGINS=[
+    'http://localhost:8080',
+    'http://localhost:3000',
+    'http://*'
+]
+
+CORS_ALLOWED_METHODS=[
+    'POST',
+    'PUT',
+    'GET',
+]
+
+CORS_ALLOWED_HEADERS=[
+    'x-csrftoken'
+]
 
 
 # Static files (CSS, JavaScript, Images)

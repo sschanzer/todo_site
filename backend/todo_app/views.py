@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from .models import *
+from .utilities import *
+
 
 # Create your views here.
 
@@ -10,15 +12,20 @@ def home(request):
     file = open('static/index.html').read()
     return HttpResponse(file)
 
-@api_view(['GET', 'POST'])
-def all_tasks(request):
-    if request.method == 'GET':
-        my_tasks = list(Task.objects.all().values())
-        return JsonResponse({'tasks': my_tasks})
-    if request.method == 'POST':
+class Task_handler(APIView):
+    
+    def get(self, request):
+        return get_all_tasks_sorted_by_id()
+    
+    def post(self, request):
         try:
-            new_task = Task.objects.create(title = request.data['name'])
-            new_task.save()
-            return JsonResponse({'createdItem':True, 'id':new_task.id})
+            return create_a_new_task(title=request.data['name'])
         except:
-            return JsonResponse({'createdItem': False, 'id':0})
+            return JsonResponse({'itemCreated': False, 'id':0})
+    
+    def put(self, request, id=0):
+        try:
+            return update_tasks_completed_status(id=id)
+        except Exception as e:
+            print(e)
+            return JsonResponse({'changed': False})

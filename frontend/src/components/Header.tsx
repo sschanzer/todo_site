@@ -2,7 +2,8 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { InputGroup } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import { Button, InputGroup } from "react-bootstrap";
 import { ITask } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -15,7 +16,7 @@ interface HeaderProps {
 
 // export so we can run tests on createTaskResponse
 export interface createTaskResponse {
-  createdItem: boolean;
+  itemCreated: boolean;
   id: number;
 }
 
@@ -51,7 +52,8 @@ export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
   ) => {
     event?.preventDefault();
     let response = await createTask(task);
-    if (response.createdItem) {
+    console.log(response);
+    if (response.itemCreated) {
       setAllTasks([
         ...allTasks,
         { id: response.id, title: task, completed: false },
@@ -61,53 +63,31 @@ export const Header: React.FC<HeaderProps> = ({ allTasks, setAllTasks }) => {
   };
 
   return (
-    <div>
-      <Container>
-        <Row>
-          <Col xs={2}>
-            <button className="btn btn-primary btn-sm">Delete</button>
-          </Col>
-          <Col xs={2}>
-            <button className="btn btn-primary btn-sm">Status</button>
-          </Col>
-          <Col xs={1}>
-            <label className="form-check-label">P</label>
-          </Col>
-          <Col xs={2}>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-            </div>
-          </Col>
-          <Col xs={1}>
-            <label className="form-check-label">C</label>
-          </Col>
-          <Col xs={4}>
-            <form onSubmit={(event) => createNewTask(newTask, event)}>
-              <input
-                type="text"
-                value={newTask}
-                placeholder="Task"
-                id="createTaskInput"
-                onChange={(event) => setNewTask(event.target.value)}
-              />
-              <button
-                className="btn btn-primary"
-                type="submit"
-                id="createTaskButton"
-                disabled={isSubmittedDisabled}
-              >
-                +
-              </button>
-            </form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Container>
+      <Row>
+        <Col xs={4}></Col>
+        <Col xs={8}>
+          <Form
+            style={{ position: "relative" }}
+            onSubmit={(event) => createNewTask(newTask, event)}
+          >
+            <Form.Control
+              value={newTask}
+              id="createTaskInput"
+              onChange={(event) => setNewTask(event.target.value)}
+            />
+            <Button
+              variant="success"
+              id="createTaskButton"
+              disabled={isSubmittedDisabled}
+              type="submit"
+            >
+              +
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
