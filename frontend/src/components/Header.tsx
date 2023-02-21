@@ -7,6 +7,7 @@ import { Button, InputGroup } from "react-bootstrap";
 import { ITask } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Toggle } from "./Toggle";
 
 // set up to pass pending task and setpending tasks into Header
 interface HeaderProps {
@@ -14,6 +15,10 @@ interface HeaderProps {
   setSelectedTasks: (selectedTasks: number[]) => void;
   allTasks: ITask[];
   setAllTasks: (allTasks: ITask[]) => void;
+  showPending: boolean;
+  setShowPending: (showPending: boolean) => void;
+  showCompleted: boolean;
+  setShowCompleted: (showCompleted: boolean) => void;
 }
 
 // export so we can run tests on createTaskResponse
@@ -31,9 +36,9 @@ export const createTask = async (
   return response["data"];
 };
 
-export const deleteTasks = async (taskIds: number[]) => {
-  let response = await axios.delete("tasks/", {
-    data: { selected: taskIds },
+export const deleteMultTasks = async (lst: number[]) => {
+  let response = await axios.delete("delete_multiple", {
+    data: { selected: lst },
   });
   return response.data.success;
 };
@@ -57,6 +62,10 @@ export const Header: React.FC<HeaderProps> = ({
   setAllTasks,
   selectedTasks,
   setSelectedTasks,
+  showPending,
+  setShowPending,
+  showCompleted,
+  setShowCompleted,
 }) => {
   const [newTask, setNewTask] = useState("");
   const [isSubmittedDisabled, setIsSubmittedDisabled] = useState(true);
@@ -78,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const deleteMultipleTasks = async () => {
-    let response = await deleteTasks(selectedTasks);
+    let response = await deleteMultTasks(selectedTasks);
     if (response) {
       setAllTasks(allTasks.filter((task) => !selectedTasks.includes(task.id)));
       setSelectedTasks([]);
@@ -134,7 +143,15 @@ export const Header: React.FC<HeaderProps> = ({
             Delete
           </Button>
         </Col>
-        <Col xs={8}>
+        <Col xs={3}>
+          <Toggle
+            showCompleted={showCompleted}
+            setShowCompleted={setShowCompleted}
+            showPending={showPending}
+            setShowPending={setShowPending}
+          />
+        </Col>
+        <Col xs={6} className="formHolder">
           <Form
             style={{ position: "relative" }}
             onSubmit={(event) => createNewTask(newTask, event)}
