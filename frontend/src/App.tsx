@@ -1,12 +1,10 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "bootswatch/dist/darkly/bootstrap.min.css";
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Header from "./components/Header";
 import axios from "axios";
-import { Task } from "./components/Task";
 import { TaskRenderer } from "./components/TaskRenderer";
 
 export interface ITask {

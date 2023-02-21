@@ -9,5 +9,8 @@ class Task(models.Model):
         self.completed = not self.completed
         self.save()
 
+    def change_title(self, name):
+        self.title = name
+        self.save()
 
     

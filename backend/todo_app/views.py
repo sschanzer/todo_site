@@ -22,9 +22,12 @@ class Task_handler(APIView):
     
     def put(self, request, id=0):
         try:
-            return update_tasks_completed_status(id=id)
+            if 'name' in request.data:
+                change_task_title(id, request.data['name'])
+            else:
+                change_task_status_by_id(id)
+            return JsonResponse({'changed': True})
         except Exception as e:
-            print(e)
             return JsonResponse({'changed': False})
     
     def delete(self, request, id=0):
@@ -33,6 +36,7 @@ class Task_handler(APIView):
             return JsonResponse({'success': True})
         except:
             return JsonResponse({'success': False})
+    
 
 class Multi_task_handler(APIView):
     
