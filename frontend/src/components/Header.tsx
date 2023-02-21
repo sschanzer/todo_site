@@ -25,10 +25,17 @@ export interface createTaskResponse {
 export const createTask = async (
   taskTitle: string
 ): Promise<createTaskResponse> => {
-  let response = await axios.post("new_task/", {
+  let response = await axios.post("task/", {
     name: taskTitle,
   });
   return response["data"];
+};
+
+export const deleteTasks = async (taskIds: number[]) => {
+  let response = await axios.delete("tasks/", {
+    data: { selected: taskIds },
+  });
+  return response.data.success;
 };
 
 export const changeSelectedTasks = async (selectedList: number[]) => {
@@ -66,6 +73,14 @@ export const Header: React.FC<HeaderProps> = ({
         });
       });
       setAllTasks([...allTasks]);
+      setSelectedTasks([]);
+    }
+  };
+
+  const deleteMultipleTasks = async () => {
+    let response = await deleteTasks(selectedTasks);
+    if (response) {
+      setAllTasks(allTasks.filter((task) => !selectedTasks.includes(task.id)));
       setSelectedTasks([]);
     }
   };
@@ -109,6 +124,14 @@ export const Header: React.FC<HeaderProps> = ({
             id="changeStatusBtn"
           >
             Update
+          </Button>
+          <Button
+            variant="danger"
+            onClick={deleteMultipleTasks}
+            disabled={isChangeStatusDisabled()}
+            id="DeleteMultBtn"
+          >
+            Delete
           </Button>
         </Col>
         <Col xs={8}>

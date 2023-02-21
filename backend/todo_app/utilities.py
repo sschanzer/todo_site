@@ -22,3 +22,11 @@ def update_tasks_completed_status(id):
 def update_multiple_tasks_completed_status(task_ids):
     [change_task_status_by_id(i) for i in task_ids]
     return JsonResponse({'success': True})
+
+def delete_task_by_id(id):
+    task = Task.objects.get(id=id)
+    task.delete()
+
+def delete_multiple_tasks(task_ids):
+    [delete_task_by_id(i) for i in task_ids]
+    return JsonResponse({'success': True})
