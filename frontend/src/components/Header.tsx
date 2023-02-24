@@ -8,6 +8,9 @@ import { ITask } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Toggle } from "./Toggle";
+import update from "../assets/update.png";
+import trash from "../assets/trash.png";
+import plus from "../assets/plus.png";
 
 // set up to pass pending task and setpending tasks into Header
 interface HeaderProps {
@@ -36,15 +39,15 @@ export const createTask = async (
   return response["data"];
 };
 
-export const deleteMultTasks = async (lst: number[]) => {
-  let response = await axios.delete("delete_multiple", {
-    data: { selected: lst },
+export const deleteTasks = async (taskIds: number[]) => {
+  let response = await axios.delete("tasks/", {
+    data: { selected: taskIds },
   });
   return response.data.success;
 };
 
-export const changeSelectedTasks = async (selectedList: number[]) => {
-  let response = await axios.put("tasks/", { selected: selectedList });
+export const changeSelectedTasks = async (taskIds: number[]) => {
+  let response = await axios.put("tasks/", { selected: taskIds });
   return response.data.success;
 };
 
@@ -87,10 +90,14 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const deleteMultipleTasks = async () => {
-    let response = await deleteMultTasks(selectedTasks);
+    let response = await deleteTasks(selectedTasks);
     if (response) {
-      setAllTasks(allTasks.filter((task) => !selectedTasks.includes(task.id)));
-      setSelectedTasks([]);
+      selectedTasks.map((id) => {
+        let selectedTask = document.getElementById(`taskMaster${id}`);
+        if (selectedTask) {
+          selectedTask.style.display = "none";
+        }
+      });
     }
   };
 
@@ -124,26 +131,47 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <Container>
-      <Row>
-        <Col xs={4}>
+    <Container style={{ marginBottom: "1vh" }}>
+      <Row
+        style={{
+          padding: "2vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Col xs={4} md={2} style={{ display: "flex" }}>
           <Button
+            variant="lite"
             onClick={changingMultipleStatus}
             disabled={isChangeStatusDisabled()}
             id="changeStatusBtn"
+            style={{
+              height: "3vh",
+              width: "2vw",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            Update
+            <img src={update} style={{ height: "2vh", width: "2vw" }} />
           </Button>
           <Button
-            variant="danger"
+            variant="lite"
             onClick={deleteMultipleTasks}
             disabled={isChangeStatusDisabled()}
             id="DeleteMultBtn"
+            style={{
+              height: "3vh",
+              width: "2vw",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            Delete
+            <img src={trash} style={{ height: "2vh", width: "2vw" }} />
           </Button>
         </Col>
-        <Col xs={3}>
+        <Col xs={4} md={2}>
           <Toggle
             showCompleted={showCompleted}
             setShowCompleted={setShowCompleted}
@@ -151,9 +179,9 @@ export const Header: React.FC<HeaderProps> = ({
             setShowPending={setShowPending}
           />
         </Col>
-        <Col xs={6} className="formHolder">
+        <Col xs={4} md={2} className="formHolder">
           <Form
-            style={{ position: "relative" }}
+            style={{ position: "relative", display: "flex" }}
             onSubmit={(event) => createNewTask(newTask, event)}
           >
             <Form.Control
@@ -162,12 +190,19 @@ export const Header: React.FC<HeaderProps> = ({
               onChange={(event) => setNewTask(event.target.value)}
             />
             <Button
-              variant="success"
+              variant="lite"
               id="createTaskButton"
               disabled={isSubmittedDisabled}
               type="submit"
+              style={{
+                height: "3vh",
+                width: "2vw",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              +
+              <img src={plus} style={{ height: "2vh", width: "2vw" }} />
             </Button>
           </Form>
         </Col>

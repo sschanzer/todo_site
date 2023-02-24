@@ -1,0 +1,28 @@
+.checkHolder {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  position: relative;
+}
+.check {
+  position: absolute;
+  opacity: 0;
+  z-index: 2;
+}
+.alterBtn {
+  height: 3vh;
+  width: 2vw;
+  font-size: 2vh;
+  text-align: center;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonHolder {
+  display: flex;
+}
+
+.buttonImg {
+  height: 2vh;
+}

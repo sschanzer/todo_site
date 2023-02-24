@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "bootswatch/dist/darkly/bootstrap.min.css";
+import "bootswatch/dist/sketchy/bootstrap.min.css";
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";

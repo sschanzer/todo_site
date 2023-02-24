@@ -10,5 +10,5 @@ urlpatterns = [
     path('task/<int:id>', Task_handler.as_view(), name='change_title'),
     path('tasks/', Multi_task_handler.as_view(), name='all_tasks'),
     path('tasks/', Multi_task_handler.as_view(), name='multiple'),
-    path('tasks/', Multi_task_handler.as_view(), name='delete_mult')
+    path('tasks/', Multi_task_handler.as_view(), name='delete_multiple')
 ]

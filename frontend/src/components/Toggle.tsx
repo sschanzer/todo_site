@@ -1,5 +1,7 @@
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import clock from "../assets/clock.png";
+import checklist from "../assets/checklist.png";
 
 interface ToggleProps {
   showPending: boolean;
@@ -17,6 +19,13 @@ export const Toggle: React.FC<ToggleProps> = ({
   return (
     <ToggleButtonGroup defaultValue={[1, 3]} size="sm" type="checkbox">
       <ToggleButton
+        style={{
+          height: "3vh",
+          width: "2vw",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         variant="outline-primary"
         id="tbg-btn-1"
         checked={showPending}
@@ -31,9 +40,16 @@ export const Toggle: React.FC<ToggleProps> = ({
         }
         value={1}
       >
-        Pending
+        <img src={clock} style={{ height: "2vh" }} />
       </ToggleButton>
       <ToggleButton
+        style={{
+          height: "3vh",
+          width: "2vw",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
         variant="outline-primary"
         id="tbg-btn-3"
         checked={showCompleted}
@@ -48,7 +64,7 @@ export const Toggle: React.FC<ToggleProps> = ({
         }
         value={3}
       >
-        Complete
+        <img src={checklist} style={{ height: "2vh" }} />
       </ToggleButton>
     </ToggleButtonGroup>
   );
